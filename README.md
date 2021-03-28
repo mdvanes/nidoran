@@ -28,6 +28,7 @@ Generate a project from a repo:
 - name: helloworld
 - remove or update email address in generated Cargo.toml
 - cd nidoran/helloworld
+- nvm use 15
 - npm init wasm-app www
 - in www: npm i
 
@@ -37,6 +38,7 @@ Build:
 
 # TODO
 
+- TypeScript instead of JS!
 - DONE: Remove name/email from generated pkg/package.json (comes from Cargo.toml)
 
 =====================

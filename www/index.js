@@ -1,3 +1,5 @@
-import { greet } from "nidoran";
+import { solve } from "nidoran";
 
-greet();
+const result = solve("my test");
+
+document.getElementById("result").textContent = result;
