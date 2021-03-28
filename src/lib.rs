@@ -1,6 +1,10 @@
 mod utils;
+extern crate serde_json;
 
 use wasm_bindgen::prelude::*;
+
+// #[macro_use]
+// extern crate serde_derive;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -14,8 +18,20 @@ extern {
 }
 
 #[wasm_bindgen]
-pub fn solve(name: &str) -> String {
-    let s = &format!("Solving: {}", name);
+pub fn solve(input: JsValue) -> String {
+    let elements: Vec<u32> = input.into_serde().unwrap();
+
+    let transformed_elements = elements.into_iter().map(|i| i.pow(2));
+
+    // let s1 = match std::str::from_utf8(&elements) {
+    //     Ok(v) => v,
+    //     Err(e) => panic!("Invalid UTF-8 sequence: {}", e),
+    // };
+    // let s1 = String::from_utf8_lossy(vec!(elements));
+    // String::new() + "Hello, " + name + "!"
+    let s1: String = transformed_elements.into_iter().map(|i| String::new() + &i.to_string() + ", ").collect();
+
+    let s = &format!("Solving: {}", s1);
 
     s.to_string()
 }
