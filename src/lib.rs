@@ -14,6 +14,8 @@ extern {
 }
 
 #[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, nidoran!");
+pub fn solve(name: &str) -> String {
+    let s = &format!("Solving: {}", name);
+
+    s.to_string()
 }
