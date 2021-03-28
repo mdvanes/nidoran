@@ -19,7 +19,11 @@ extern {
 
 #[wasm_bindgen]
 pub fn solve(input: JsValue) -> String {
-    let elements: Vec<u32> = input.into_serde().unwrap();
+    let elements: Vec<u8> = input.into_serde().unwrap();
+
+    let orig_elements = elements.clone();
+
+    let input_str: String = orig_elements.into_iter().map(|i| String::new() + &i.to_string() + ", ").collect();
 
     let transformed_elements = elements.into_iter().map(|i| i.pow(2));
 
@@ -31,7 +35,7 @@ pub fn solve(input: JsValue) -> String {
     // String::new() + "Hello, " + name + "!"
     let s1: String = transformed_elements.into_iter().map(|i| String::new() + &i.to_string() + ", ").collect();
 
-    let s = &format!("Solving: {}", s1);
+    let s = &format!("Solving: {} Result: {}", input_str, s1);
 
     s.to_string()
 }
