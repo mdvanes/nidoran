@@ -1,3 +1,46 @@
+# Setup
+
+src: https://rustwasm.github.io/docs/book/game-of-life/setup.html
+
+Install Rust toolchain:
+
+- curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+- source $HOME/.cargo/env
+- test if installed correctly: rustc --version
+
+Install wasm-pack for Rust generated WebAssembly:
+
+- https://rustwasm.github.io/wasm-pack/installer/
+- curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh 
+
+Install cargo-generate to generate a new Rust project:
+
+- cargo install cargo-generate
+- this takes like 10 minutes
+
+Switch to latest Node:
+
+- nvm use 15
+
+Generate a project from a repo:
+
+- cargo generate --git https://github.com/rustwasm/wasm-pack-template
+- name: helloworld
+- remove or update email address in generated Cargo.toml
+- cd nidoran/helloworld
+- npm init wasm-app www
+- in www: npm i
+
+Build:
+- in nidoran/helloworld: wasm-pack build
+- in nidoran/helloworld/www: npm run start
+
+# TODO
+
+- DONE: Remove name/email from generated pkg/package.json (comes from Cargo.toml)
+
+=====================
+
 <div align="center">
 
   <h1><code>wasm-pack-template</code></h1>

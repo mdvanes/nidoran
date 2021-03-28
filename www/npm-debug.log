@@ -1,0 +1,74 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'view',
+1 verbose cli   '--json',
+1 verbose cli   'my-hello',
+1 verbose cli   'description',
+1 verbose cli   'dist-tags.latest',
+1 verbose cli   'homepage',
+1 verbose cli   'version' ]
+2 info using npm@3.6.0
+3 info using node@v5.6.0
+4 silly mapToRegistry name my-hello
+5 silly mapToRegistry using default registry
+6 silly mapToRegistry registry https://registry.npmjs.org/
+7 silly mapToRegistry uri https://registry.npmjs.org/my-hello
+8 verbose request uri https://registry.npmjs.org/my-hello
+9 verbose request no auth needed
+10 info attempt registry request try #1 at 10:03:30 AM
+11 verbose request using bearer token for auth
+12 verbose request id a5aae7affbcac528
+13 http request GET https://registry.npmjs.org/my-hello
+14 http 404 https://registry.npmjs.org/my-hello
+15 verbose headers { date: 'Sun, 28 Mar 2021 08:03:30 GMT',
+15 verbose headers   'content-type': 'application/json',
+15 verbose headers   'content-length': '21',
+15 verbose headers   connection: 'keep-alive',
+15 verbose headers   'set-cookie': [ '__cfduid=d4126e663acead69dabbd6cf1ae22f5d41616918610; expires=Tue, 27-Apr-21 08:03:30 GMT; path=/; domain=.npmjs.org; HttpOnly; SameSite=Lax' ],
+15 verbose headers   'cf-ray': '636f57a2af97bf82-AMS',
+15 verbose headers   age: '16',
+15 verbose headers   vary: 'Accept-Encoding',
+15 verbose headers   'cf-cache-status': 'HIT',
+15 verbose headers   'cf-request-id': '09197519a50000bf823e20a000000001',
+15 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+15 verbose headers   server: 'cloudflare' }
+16 silly get cb [ 404,
+16 silly get   { date: 'Sun, 28 Mar 2021 08:03:30 GMT',
+16 silly get     'content-type': 'application/json',
+16 silly get     'content-length': '21',
+16 silly get     connection: 'keep-alive',
+16 silly get     'set-cookie': [ '__cfduid=d4126e663acead69dabbd6cf1ae22f5d41616918610; expires=Tue, 27-Apr-21 08:03:30 GMT; path=/; domain=.npmjs.org; HttpOnly; SameSite=Lax' ],
+16 silly get     'cf-ray': '636f57a2af97bf82-AMS',
+16 silly get     age: '16',
+16 silly get     vary: 'Accept-Encoding',
+16 silly get     'cf-cache-status': 'HIT',
+16 silly get     'cf-request-id': '09197519a50000bf823e20a000000001',
+16 silly get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+16 silly get     server: 'cloudflare' } ]
+17 verbose stack Error: Not found : my-hello
+17 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+17 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+17 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+17 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+17 verbose stack     at emitTwo (events.js:100:13)
+17 verbose stack     at Request.emit (events.js:185:7)
+17 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1035:10)
+17 verbose stack     at emitOne (events.js:95:20)
+17 verbose stack     at Request.emit (events.js:182:7)
+17 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:962:12)
+18 verbose statusCode 404
+19 verbose pkgid my-hello
+20 verbose cwd /home/martin/ZNoBackup/repos/nidoran/nidoran/www
+21 error Linux 5.4.0-70-generic
+22 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "view" "--json" "my-hello" "description" "dist-tags.latest" "homepage" "version"
+23 error node v5.6.0
+24 error npm  v3.6.0
+25 error code E404
+26 error 404 Not found : my-hello
+27 error 404
+28 error 404 'my-hello' is not in the npm registry.
+29 error 404 You should bug the author to publish it (or use the name yourself!)
+30 error 404 Note that you can also install from a
+31 error 404 tarball, folder, http url, or git url.
+32 verbose exit [ 1, true ]
