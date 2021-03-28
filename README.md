@@ -25,16 +25,16 @@ Switch to latest Node:
 Generate a project from a repo:
 
 - cargo generate --git https://github.com/rustwasm/wasm-pack-template
-- name: helloworld
+- name: nidoran
 - remove or update email address in generated Cargo.toml
-- cd nidoran/helloworld
+- cd nidoran/nidoran
 - nvm use 15
 - npm init wasm-app www
 - in www: npm i
 
 Build:
-- in nidoran/helloworld: wasm-pack build
-- in nidoran/helloworld/www: npm run start
+- in nidoran/nidoran/www: `wasm-pack build` (can also be run in nidoran/nidoran, but in www is easier to switch between this and npm start)
+- in nidoran/nidoran/www: `npm start`
 
 # TODO
 
