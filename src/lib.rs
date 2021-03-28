@@ -19,6 +19,8 @@ extern {
 
 #[wasm_bindgen]
 pub fn solve(input: JsValue) -> String {
+    utils::set_panic_hook();
+
     let elements: Vec<u8> = input.into_serde().unwrap();
 
     let orig_elements = elements.clone();
