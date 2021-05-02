@@ -32,7 +32,16 @@ Generate a project from a repo:
 - npm init wasm-app www
 - in www: npm i
 
+Add Crates/dependencies:
+
+- when adding a crate with e.g. `extern crate web_sys;`
+- On crates.io find the crate: https://crates.io/crates/web-sys
+- This lists the instruction: Add the following line to your Cargo.toml file: `web-sys = "0.3.50"`
+- in nidoran/nidoran, run, `cargo check`
+- Rebuild with `wasm-pack build`
+
 Build:
+
 - in nidoran/nidoran/www: `wasm-pack build` (can also be run in nidoran/nidoran, but in www is easier to switch between this and npm start)
 - in nidoran/nidoran/www: `npm start`
 
