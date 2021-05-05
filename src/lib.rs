@@ -99,6 +99,11 @@ fn join_with_n(mut acc: String, next: String) -> String {
     acc
 }
 
+// TODO add acc.len in the Closure_
+fn curried_join(separator: String) -> Box<Fn(String, String) -> String> {
+    Box::new(move |acc, next| acc + &separator + &next)
+}
+
 fn higher_order_fn<F>(value:i32, step: F)  -> i32
                     where F: Fn(i32) -> i32 {
     step(value)
@@ -161,7 +166,8 @@ fn format_matrix(m: [[i8; 9]; 9]) -> String {
     let m_strings = m_deep_gen_arr.map(|row| row.map(|cell| cell.to_string()));
     log!("m_strings {:?}", m_strings);
     // let m_joined = m_strings.map(|row| row.fold(String::new(), join));
-    let m_joined = m_strings.map(|row| row.fold(String::new(), join)).fold(String::new(), join_with_n);
+    // let m_joined = m_strings.map(|row| row.fold(String::new(), join)).fold(String::new(), join_with_n);
+    let m_joined = m_strings.map(|row| row.fold(String::new(), join)).fold(String::new(), curried_join("\n".to_string()));
     log!("m_joined {:?}", m_joined);
 
     m_joined.to_string()
