@@ -83,8 +83,57 @@ fn toGenArr(arr: &[i8; 9]) -> GenericArray<i8, U9> {
     *GenericArray::from_slice(arr)
 }
 
+fn join(mut acc: String, next: String) -> String {
+    if acc.len() > 0 {
+        acc.push_str(", ");
+    }
+    acc.push_str(&next);
+    acc
+}
+
+fn join_with_n(mut acc: String, next: String) -> String {
+    if acc.len() > 0 {
+        acc.push_str("\n");
+    }
+    acc.push_str(&next);
+    acc
+}
+
+fn higher_order_fn<F>(value:i32, step: F)  -> i32
+                    where F: Fn(i32) -> i32 {
+    step(value)
+}
+fn add_one(x:i32)->i32 { x+1}
+// let result = higher_order_fn(20, add_one);
+// let result = higer_order_fn(20, |x:i32| x +1 );
+
+// fn join_hof_inner(separator: String, mut acc: String, next: String) -> String {
+//     if acc.len() > 0 {
+//         acc.push_str(&separator);
+//     }
+//     acc.push_str(&next);
+//     acc
+// }
+
+// fn join_hof<F>(separator: String, joiner: F) -> String 
+//         where F: Fn(String, String) -> String {
+//     joiner(separator, acc, next)
+// }
+
+// https://doc.rust-lang.org/rust-by-example/fn/hof.html
+// // Functional approach
+// let sum_of_squared_odd_numbers: u32 =
+//     (0..).map(|n| n * n)                             // All natural numbers squared
+//          .take_while(|&n_squared| n_squared < upper) // Below upper limit
+//          .filter(|&n_squared| is_odd(n_squared))     // That are odd
+//          .fold(0, |acc, n_squared| acc + n_squared); // Sum them
+// println!("functional style: {}", sum_of_squared_odd_numbers);
+
 // TODO see https://github.com/fizyk20/generic-array/blob/master/DESIGN.md
 // Note: || func is a closure
+
+// TODO read this example of map over an array of ints: https://dev.to/deciduously/higher-order-functions-in-rust-287h
+// TODO read fp in Rust: http://blog.madhukaraphatak.com/functional-programming-in-rust-part-1/
 
 // TODO convert i8 to u8?
 fn format_matrix(m: [[i8; 9]; 9]) -> String {
@@ -111,40 +160,11 @@ fn format_matrix(m: [[i8; 9]; 9]) -> String {
     log!("m_deep_gen_arr {:?}", m_deep_gen_arr);
     let m_strings = m_deep_gen_arr.map(|row| row.map(|cell| cell.to_string()));
     log!("m_strings {:?}", m_strings);
-    // let m1_mapped = row1.map(|x| x.map(|y| y.to_string()));
-    // //.fold(String::new(), |acc, next| acc + ", " + &next);
-    // log!("m1_mapped {:?}", m1_mapped);
+    // let m_joined = m_strings.map(|row| row.fold(String::new(), join));
+    let m_joined = m_strings.map(|row| row.fold(String::new(), join)).fold(String::new(), join_with_n);
+    log!("m_joined {:?}", m_joined);
 
-    let mut owned_string: String = String::new(); // "".to_owned();
-                                                  // let borrowed_string: &str = "world";
-
-    // for x in &m[0] {
-    //     owned_string.push_str(&(String::new() + &x.to_string() + ", "));
-    // }
-    let mut xcounter = 0;
-
-    for x in &m {
-        xcounter += 1;
-        let mut ycounter = 0;
-        for y in x {
-            ycounter += 1;
-            // owned_string.push_str(&(String::new() + &y.to_string() + ", "));
-            owned_string.push_str(&y.to_string());
-            if ycounter != x.len() {
-                owned_string.push_str(", ");
-            }
-        }
-        if xcounter != m.len() {
-            owned_string.push_str("\n");
-        }
-    }
-
-    // There is no semi colon on the end of this line, making it the "tail", which is returned
-    owned_string.to_string()
-
-    // TODO array.map is experimental? Reimplement this with: map & "join", see JS implementation
-    // let s = &m[0].map(|i| String::new() + &i.to_string() + ", ").collect();
-    // s.to_string()
+    m_joined.to_string()
 }
 
 #[wasm_bindgen]
