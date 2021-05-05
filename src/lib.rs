@@ -3,13 +3,10 @@ extern crate generic_array;
 extern crate serde_json;
 extern crate web_sys;
 
-use generic_array::arr;
+// use generic_array::arr;
 use generic_array::functional::*;
-use generic_array::sequence::*;
-use generic_array::typenum::consts::U1;
-use generic_array::typenum::consts::U2;
 use generic_array::typenum::consts::U9;
-use generic_array::{ArrayLength, GenericArray};
+use generic_array::{GenericArray};
 use wasm_bindgen::prelude::*;
 
 // #[macro_use]
@@ -33,14 +30,8 @@ macro_rules! log {
     }
 }
 
-// Pseudo code from JS
-// pub fn printMatrix = (m: )=>{
-//     return m.map(row=>{
-//         return row.map(cell=>cell ? `${cell}` : " ").join(" ");
-//     }
-//     ).join("\n");
-// }
-fn format_matrix_old(m: [[i8; 9]; 9]) -> String {
+// TODO Clean up
+pub fn format_matrix_old(m: [[i8; 9]; 9]) -> String {
     let mut owned_string: String = String::new(); // "".to_owned();
                                                   // let borrowed_string: &str = "world";
 
@@ -73,44 +64,36 @@ fn format_matrix_old(m: [[i8; 9]; 9]) -> String {
     // s.to_string()
 }
 
-fn intsToStrings(x: [i8; 2]) -> GenericArray<String, U2> {
-    let z = GenericArray::from_slice(&x);
-    z.map(|y| y.to_string())
-    // z.map(|y| y + 1)
-}
+// fn ints_to_strings(x: [i8; 2]) -> GenericArray<String, U2> {
+//     let z = GenericArray::from_slice(&x);
+//     z.map(|y| y.to_string())
+//     // z.map(|y| y + 1)
+// }
 
-fn toGenArr(arr: &[i8; 9]) -> GenericArray<i8, U9> {
+fn to_gen_arr(arr: &[i8; 9]) -> GenericArray<i8, U9> {
     *GenericArray::from_slice(arr)
 }
 
-fn join(mut acc: String, next: String) -> String {
-    if acc.len() > 0 {
-        acc.push_str(", ");
-    }
-    acc.push_str(&next);
-    acc
-}
+// fn join(mut acc: String, next: String) -> String {
+//     if acc.len() > 0 {
+//         acc.push_str(", ");
+//     }
+//     acc.push_str(&next);
+//     acc
+// }
 
-fn join_with_n(mut acc: String, next: String) -> String {
-    if acc.len() > 0 {
-        acc.push_str("\n");
-    }
-    acc.push_str(&next);
-    acc
-}
+// fn join_with_n(mut acc: String, next: String) -> String {
+//     if acc.len() > 0 {
+//         acc.push_str("\n");
+//     }
+//     acc.push_str(&next);
+//     acc
+// }
 
-// TODO add acc.len in the Closure_
-fn curried_join(separator: String) -> Box<Fn(String, String) -> String> {
-    Box::new(move |acc, next| acc + &separator + &next)
+// Curried Join, with Closure in "new"
+fn join(separator: String) -> Box<dyn Fn(String, String) -> String> {
+    Box::new(move |acc, next| if acc.len() > 0 { acc + &separator + &next } else { next })
 }
-
-fn higher_order_fn<F>(value:i32, step: F)  -> i32
-                    where F: Fn(i32) -> i32 {
-    step(value)
-}
-fn add_one(x:i32)->i32 { x+1}
-// let result = higher_order_fn(20, add_one);
-// let result = higer_order_fn(20, |x:i32| x +1 );
 
 // fn join_hof_inner(separator: String, mut acc: String, next: String) -> String {
 //     if acc.len() > 0 {
@@ -161,13 +144,13 @@ fn format_matrix(m: [[i8; 9]; 9]) -> String {
 
     let m_gen_arr: &GenericArray<[i8; 9], U9> = GenericArray::from_slice(&m);
     log!("m_gen_arr {:?}", m_gen_arr);
-    let m_deep_gen_arr = m_gen_arr.map(toGenArr);
+    let m_deep_gen_arr = m_gen_arr.map(to_gen_arr);
     log!("m_deep_gen_arr {:?}", m_deep_gen_arr);
     let m_strings = m_deep_gen_arr.map(|row| row.map(|cell| cell.to_string()));
     log!("m_strings {:?}", m_strings);
     // let m_joined = m_strings.map(|row| row.fold(String::new(), join));
     // let m_joined = m_strings.map(|row| row.fold(String::new(), join)).fold(String::new(), join_with_n);
-    let m_joined = m_strings.map(|row| row.fold(String::new(), join)).fold(String::new(), curried_join("\n".to_string()));
+    let m_joined = m_strings.map(|row| row.fold(String::new(), join(", ".to_string()))).fold(String::new(), join("\n".to_string()));
     log!("m_joined {:?}", m_joined);
 
     m_joined.to_string()
@@ -215,6 +198,7 @@ pub fn solve(input: JsValue) -> String {
     format_matrix(matrix)
 }
 
+// TODO clean up
 #[wasm_bindgen]
 pub fn solve_old(input: JsValue) -> String {
     utils::set_panic_hook();
